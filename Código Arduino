@@ -1,0 +1,105 @@
+/*
+Author: Gabriel Guerrero 
+Date: 2.10.2022
+Project: Código para Will-I
+Description: Código usado para controlar a Will-I mediante AppInventor
+*/
+
+//Declare variables
+
+
+// Pra los Motores
+int motorL1 = 5;  // INPUT 1 - LEFT
+int motorL2 = 6;  // INPUT 2 - LEFT
+int motorR1 = 10; // INPUT 3 - RIGHT 
+int motorR2 = 9;  // INPUT 4 - RIGHT
+
+
+//Variables auxiliares
+int vel = 100;
+char dataFromApp = 'S';
+void setup()
+{
+  Serial.begin(9600);
+  
+  //Output variables
+  pinMode(motorL1, OUTPUT);  
+  pinMode(motorL2, OUTPUT);
+  pinMode(motorR1, OUTPUT);
+  pinMode(motorR2, OUTPUT);  
+}
+ 
+void loop()
+{
+    
+    //Wait new data
+    if(Serial.available() > 0){
+      dataFromApp = Serial.read();
+    }
+     
+ switch (dataFromApp) {
+    case 'A':
+      adelante_motor_derecha();        
+      break;
+    case 'B':
+      adelante_motor_izquierda();
+      break;
+    case 'C':
+      parar_motor_derecha();
+      break;
+    case 'D':
+      parar_motor_izquierda();
+      break;
+    case 'E':
+      atras_motor_derecha();
+      break;
+    case 'F':
+      atras_motor_izquierda();
+      break;  
+    }   
+    delay(20);
+}
+
+// El motor de la izquierda va en el input 1 e input 2 del controlador
+void adelante_motor_izquierda() {
+  digitalWrite(motorL1, 0);
+  digitalWrite(motorL2, vel);
+  digitalWrite(motorR1, 0);
+  digitalWrite(motorR2, 0);
+}
+ 
+//El motor de la derecha va en el input 3 e input 4 del controlador
+void adelante_motor_derecha() {
+  digitalWrite(motorL1, 0);
+  digitalWrite(motorL2, 0);
+  digitalWrite(motorR1, 0);
+  digitalWrite(motorR2, vel);
+}
+
+void parar_motor_izquierda() {
+  digitalWrite(motorL1, 0);
+  digitalWrite(motorL2, 0);
+  digitalWrite(motorR1, 0);
+  digitalWrite(motorR2, 0);
+}
+
+void parar_motor_derecha() {
+  digitalWrite(motorL1, 0);
+  digitalWrite(motorL2, 0);
+  digitalWrite(motorR1, 0);
+  digitalWrite(motorR2, 0);
+}
+// El motor de la derecha va en el input 1 e input 2 del controlador
+void atras_motor_izquierda() {
+  digitalWrite(motorL1, vel);
+  digitalWrite(motorL2, 0);
+  digitalWrite(motorR1, 0);
+  digitalWrite(motorR2, 0);
+}
+//El motor de la izquierda va en el input 3 e input 4 del controlador
+void atras_motor_derecha() {
+  digitalWrite(motorL1, 0);
+  digitalWrite(motorL2, 0);
+  digitalWrite(motorR1, vel);
+  digitalWrite(motorR2, 0);
+}
